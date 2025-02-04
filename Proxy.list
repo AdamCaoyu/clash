@@ -1,7 +1,3 @@
-# IP段匹配
-IP-CIDR,142.171.133.131/32,no-resolve
-
-
-# 国外DNS
+# 代理域名
 DOMAIN-SUFFIX,clashforwindows.org
 
