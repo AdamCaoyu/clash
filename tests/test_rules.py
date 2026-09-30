@@ -71,7 +71,8 @@ class RulesTests(unittest.TestCase):
                 groups[name] = [m[2:] for m in members if m.startswith('[]')]
         self.assertIn(AI, groups)
         self.assertEqual(groups[AI][0], '💬 ChatGPT')
-        self.assertEqual(groups['☁️ OneDrive'][0], 'Ⓜ️ Microsoft')
+        self.assertEqual(groups['☁️ OneDrive'][0], '美国-自动')
+        self.assertEqual(groups['🔑 微软登录'][0], '☁️ OneDrive')
         self.assertEqual(groups['🍎 Apple'][0], 'DIRECT')
         self.assertEqual(groups['Ⓜ️ Microsoft'][0], 'DIRECT')
         self.assertEqual([x for x in template() if x.startswith('ruleset=')][-1], 'ruleset=DIRECT,[]FINAL')
@@ -107,12 +108,20 @@ class RulesTests(unittest.TestCase):
         self.assertNotIn('广美',rows['港台日新韩-自动'])
 
     def test_sensitive_services_can_select_nodes_independently(self):
-        for name in ['💬 ChatGPT','🧠 Claude','📘 GitHub','🔎 Google','Ⓜ️ Microsoft','💳 PayPal','🌳 Amazon']:
+        for name in ['💬 ChatGPT','🧠 Claude','📘 GitHub','🔎 Google','Ⓜ️ Microsoft','💳 PayPal','🌳 Amazon','☁️ OneDrive','🔑 微软登录']:
             row = next(s for s in template() if s.startswith('custom_proxy_group='+name+'`'))
             pattern = row.split('`')[-1]
             self.assertTrue(re.search(pattern,'US Test'))
             self.assertTrue(re.search(pattern,'JP Test'))
             self.assertFalse(re.search(pattern,'US 下载专用'))
+
+    def test_onedrive_alias_and_scope(self):
+        self.assertEqual((ROOT/'list/OneDrive').read_bytes(), (ROOT/'list/OneDrive.list').read_bytes())
+        rules = entries(ROOT/'list/OneDrive.list')
+        for h in ['officeapps.live.com','skyapi.live.net','onedrive.cloud.microsoft']:
+            self.assertTrue(any(matches(r,h) for r in rules))
+        for h in ['outlook.live.com','unrelated.trafficmanager.net','unrelated.msedge.net']:
+            self.assertFalse(any(matches(r,h) for r in rules))
 
     def test_compatibility_template_matches_canonical(self):
         self.assertTrue((ROOT / 'config/openclash.ini').is_file())
