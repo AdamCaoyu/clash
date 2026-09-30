@@ -3,6 +3,7 @@ Usage: python3 scripts/validate_generated.py CONFIG.yaml [PROVIDER_FIXTURE_DIR]
 Requires PyYAML. The optional directory contains downloaded test provider payloads.
 """
 import sys
+import re
 from pathlib import Path
 from urllib.parse import urlparse
 import yaml
@@ -10,15 +11,21 @@ import yaml
 config = yaml.safe_load(Path(sys.argv[1]).read_text())
 groups = {g['name']: g for g in config['proxy-groups']}
 ai = '🍏 Apple Intelligence'
-for name in ['台湾-固定', '香港-固定', '日本-固定', '新加坡-固定', '美国-固定', '全部-手动']:
-    members = groups[name]['proxies']
-    assert groups[name]['type'] == 'select', name
-    assert members and 'DIRECT' not in members, f'{name}: empty group became DIRECT'
-    assert members[-1] == 'REJECT', f'{name}: missing explicit empty-group guard'
-assert groups[ai]['proxies'][0] == '🔐 稳定账号'
-assert groups['🔐 稳定账号']['proxies'][0] == '台湾-固定'
-assert groups['🧭 日常代理']['proxies'][0] == '台湾-固定'
-assert groups['🎥 Netflix']['proxies'][0] == '新加坡-固定'
+for name in ['所有','港台日新韩','台日新韩','香港','台湾','日本','新加坡','韩国','美国','其他']:
+    g = groups[name+'-自动']
+    assert g['type'] == 'url-test'
+    assert g['interval'] == 180 and g['tolerance'] == 100
+    assert g['proxies'] and 'DIRECT' not in g['proxies']
+    assert g['proxies'][-1] == 'REJECT'
+assert groups[ai]['proxies'][0] == '💬 ChatGPT'
+assert groups['☁️ OneDrive']['proxies'][0] == 'Ⓜ️ Microsoft'
+assert groups['Ⓜ️ Microsoft']['proxies'][0] == 'DIRECT'
+assert config['rules'][-1] == 'MATCH,DIRECT'
+for name in ['💬 ChatGPT','🧠 Claude','📘 GitHub','🔎 Google','Ⓜ️ Microsoft','💳 PayPal','🌳 Amazon']:
+    assert groups[name]['type'] == 'select'
+    eligible = {p['name'] for p in config['proxies']
+                if not re.search('下载|公益|备用|剩余|到期|官网|异常', p['name'])}
+    assert eligible <= set(groups[name]['proxies']), f'{name}: missing independently selectable nodes'
 
 rules = []
 for rule in config['rules']:
@@ -55,19 +62,26 @@ def first_domain_match(domain):
 cases = {}
 for domain in ['guzzoni.apple.com', 'api.smoot.apple.com', 'apple-relay.apple.com',
                'apple-relay.cloudflare.com', 'apple-relay.fastly-edge.com',
-               'cp4.cloudflare.com', 'apple-relay.mask.apple-dns.net',
-               'chatgpt.com', 'auth.openai.com', 'cdn.oaistatic.com', 'files.oaiusercontent.com']:
+               'cp4.cloudflare.com', 'apple-relay.mask.apple-dns.net']:
     cases[domain] = ai
 for domain in ['www.apple.com', 'gateway.icloud.com', 'apps.mzstatic.com',
                'gspe1-ssl.ls.apple.com', 'push.apple.com', 'time.apple.com']:
     cases[domain] = '🍎 Apple'
-cases.update({'claude.ai':'🤖 AI','claude.com':'🤖 AI','gemini.google.com':'🤖 AI',
-              'github.com':'💼 工作账号','accounts.google.com':'💼 工作账号',
-              'login.microsoftonline.com':'💼 工作账号','onedrive.live.com':'💼 工作账号',
-              'paypal.com':'💳 海外账户','amazon.com':'💳 海外账户',
-              'netflix.com':'🎥 Netflix','youtube.com':'🎬 国际媒体',
-              'baidu.com':'➡️ 国内','router.lan':'DIRECT',
-              'unclassified-example.invalid':'🌐 漏网'})
+cases.update({'chatgpt.com':'💬 ChatGPT','auth.openai.com':'💬 ChatGPT',
+              'cdn.oaistatic.com':'💬 ChatGPT','files.oaiusercontent.com':'💬 ChatGPT',
+              'chatgpt.livekit.cloud':'💬 ChatGPT','openaiassets.blob.core.windows.net':'💬 ChatGPT',
+              'claude.ai':'🧠 Claude','claude.com':'🧠 Claude','gemini.google.com':'🔎 Google',
+              'grok.com':'🤖 Grok','grok.x.com':'🤖 Grok','x.com':'🕊️ Twitter(X)',
+              'meta.ai':'✨ AI2','perplexity.ai':'✨ AI2','poe.com':'✨ AI1',
+              'github.com':'📘 GitHub','githubcopilot.com':'📘 GitHub',
+              'accounts.google.com':'🔎 Google','login.microsoftonline.com':'Ⓜ️ Microsoft',
+              'login.live.com':'Ⓜ️ Microsoft','copilot.microsoft.com':'Ⓜ️ Microsoft',
+              'copilot.com':'Ⓜ️ Microsoft','onedrive.live.com':'☁️ OneDrive',
+              'paypal.com':'💳 PayPal','amazon.com':'🌳 Amazon',
+              'netflix.com':'🎥 Netflix','youtube.com':'🎞️ YouTube',
+              'baidu.com':'DIRECT','router.lan':'DIRECT',
+              'unclassified-example.invalid':'DIRECT'})
+
 for domain, expected in cases.items():
     actual = first_domain_match(domain)
     assert actual == expected, f'{domain}: {actual} != {expected}'

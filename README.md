@@ -1,6 +1,6 @@
 # 草鱼的分流规则
 
-台湾固定节点为主，Netflix 默认新加坡；Apple Intelligence 与普通苹果服务分开，重要账号共用稳定出口。
+在原有服务分组上维护：保留自动测速、直连兜底，为 Apple、Microsoft 及重要账号提供独立选节点的能力。
 
 ## 直接使用
 
@@ -14,19 +14,22 @@ https://raw.githubusercontent.com/AdamCaoyu/clash/refs/heads/main/Clash-Full.ini
 
 [设置与更新步骤](docs/使用与维护.md) · [苹果专项说明](docs/苹果服务优化与使用说明.md) · [规则源对比](docs/规则来源与取舍.md) · [当前规则目录](docs/规则目录.md)
 
-## 默认策略
+## 分组与默认行为
 
-| 业务 | 默认出口 |
+| 范围 | 行为 |
 | --- | --- |
-| 日常国外网站、国际媒体、游戏商店 | 台湾固定 |
-| Apple Intelligence / ChatGPT、其他 AI | 稳定账号 → 台湾固定 |
-| Google、GitHub、Microsoft、OneDrive | 稳定账号 → 台湾固定 |
-| PayPal、Amazon | 稳定账号 → 台湾固定 |
-| Netflix | 新加坡固定 |
-| 普通 Apple、国内网站、Steam 国内下载 | DIRECT |
-| 未分类流量 | 日常代理 → 台湾固定，可手动改为直连 |
+| 原有 32 个组 | 名称保留；10 个自动测速组仍为 url-test，180 秒检测、100 ms 切换容差 |
+| 未匹配流量 | MATCH,DIRECT，黑名单模式 |
+| 普通 Apple / Microsoft | 保留默认 DIRECT；可直接选具体节点，也保留原来的自动组选项 |
+| OneDrive | 默认跟随 Microsoft，避免默认走不同出口；可单独选择 |
+| Apple Intelligence | 默认跟随新增 ChatGPT 组；ChatGPT 初始跟随原 AI1 |
+| Claude | 独立选择；初始跟随原 AI1 |
+| Google / PayPal | 独立选择；分别默认跟随原“国外”组 / DIRECT |
+| 媒体、社交、游戏 | 恢复原有独立分组和选项，没有合并成大组 |
 
-“固定”指手动选定节点，不按延迟自动切换；不是固定公网 IP 服务。账号、AI、Netflix 是否可用还取决于节点出口和服务条件。
+除 OneDrive 的关联调整外，原业务组的默认选择不变。原模板多数业务组默认 DIRECT；面板中已有的选择是否保留由 OpenClash / 内核缓存决定，更新后应核对。要让黑名单中的国外网站走代理，可在“🌍 国外”选择原有自动组。
+
+敏感服务组支持直接选择订阅中的具体节点，彼此独立。需要固定出口时请选择节点本身；选择“所有-自动”等自动组仍会按延迟切换。固定节点不能保证固定公网 IP 或避免账号风控。
 
 ## 只维护这些位置
 

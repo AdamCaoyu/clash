@@ -5,7 +5,7 @@ ROOT = Path(__file__).resolve().parents[1]
 (ROOT / 'Clash-Full.ini').write_bytes((ROOT / 'config/openclash.ini').read_bytes())
 output = ROOT / 'rules/clash'
 output.mkdir(parents=True, exist_ok=True)
-for name in ['Apple', 'ChatGPT', 'CaoyuDirect', 'CaoyuProxy']:
+for name in ['Apple', 'ChatGPT', 'CaoyuDirect', 'CaoyuProxy', 'AI2']:
     rules = [line.strip() for line in (ROOT / 'list' / (name + '.list')).read_text().splitlines()
              if line.strip() and not line.lstrip().startswith('#')]
     if any(len(line.split(',')) != 2 for line in rules):
@@ -13,4 +13,4 @@ for name in ['Apple', 'ChatGPT', 'CaoyuDirect', 'CaoyuProxy']:
     (output / (name + '.yaml')).write_text(
         '# Generated from list/' + name + '.list; do not edit independently.\npayload:\n' +
         ''.join('  - ' + repr(line) + '\n' for line in rules))
-print('Synced Clash-Full.ini and 4 local rule providers')
+print('Synced Clash-Full.ini and 5 local rule providers')
