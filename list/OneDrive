@@ -1,11 +1,11 @@
 # --- OneDrive / OneNote Web ---
-DOMAIN-SUFFIX,onedrive.live.com,美国节点
-DOMAIN-SUFFIX,storage.live.com,美国节点
-DOMAIN-SUFFIX,1drv.com,美国节点
-DOMAIN-SUFFIX,sharepoint.com,美国节点
-DOMAIN-SUFFIX,sharepoint-df.com,美国节点
-DOMAIN-SUFFIX,officeapps.live.com,美国节点
-DOMAIN-SUFFIX,office.com,美国节点
-DOMAIN-SUFFIX,live.com,美国节点
-DOMAIN-SUFFIX,msedge.net,美国节点
-DOMAIN-SUFFIX,trafficmanager.net,美国节点
+DOMAIN-SUFFIX,onedrive.live.com
+DOMAIN-SUFFIX,storage.live.com
+DOMAIN-SUFFIX,1drv.com
+DOMAIN-SUFFIX,sharepoint.com
+DOMAIN-SUFFIX,sharepoint-df.com
+DOMAIN-SUFFIX,officeapps.live.com
+DOMAIN-SUFFIX,office.com
+DOMAIN-SUFFIX,live.com
+DOMAIN-SUFFIX,msedge.net
+DOMAIN-SUFFIX,trafficmanager.net

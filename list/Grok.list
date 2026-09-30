@@ -1,31 +1,30 @@
 DOMAIN-SUFFIX,grok.com
-# --- Grok / xAI 基本域名（替换 ProxyGroupName 为你的代理组） ---
-DOMAIN-SUFFIX,grok.com,ProxyGroupName
-DOMAIN-SUFFIX,x.ai,ProxyGroupName
+# --- Grok / xAI 基本域名（策略由转换模板指定） ---
+DOMAIN-SUFFIX,x.ai
 
 # 常见 xAI 子域（API / 控制台 / 文档 / 账户 等）
-DOMAIN,api.x.ai,ProxyGroupName
-DOMAIN-SUFFIX,api.x.ai,ProxyGroupName
-DOMAIN,console.x.ai,ProxyGroupName
-DOMAIN-SUFFIX,console.x.ai,ProxyGroupName
-DOMAIN,docs.x.ai,ProxyGroupName
-DOMAIN-SUFFIX,docs.x.ai,ProxyGroupName
-DOMAIN,accounts.x.ai,ProxyGroupName
-DOMAIN-SUFFIX,accounts.x.ai,ProxyGroupName
-DOMAIN,management-api.x.ai,ProxyGroupName
-DOMAIN-SUFFIX,management-api.x.ai,ProxyGroupName
+DOMAIN,api.x.ai
+DOMAIN-SUFFIX,api.x.ai
+DOMAIN,console.x.ai
+DOMAIN-SUFFIX,console.x.ai
+DOMAIN,docs.x.ai
+DOMAIN-SUFFIX,docs.x.ai
+DOMAIN,accounts.x.ai
+DOMAIN-SUFFIX,accounts.x.ai
+DOMAIN,management-api.x.ai
+DOMAIN-SUFFIX,management-api.x.ai
 
 # grok.com 下常见页面 / 服务（有时会用独立子域/路径）
-DOMAIN-SUFFIX,www.grok.com,ProxyGroupName
-DOMAIN,imagine.grok.com,ProxyGroupName
-DOMAIN,grok.com,ProxyGroupName
+DOMAIN-SUFFIX,www.grok.com
+DOMAIN,imagine.grok.com
+DOMAIN,grok.com
 
 # 可能用于媒体/图片/静态资源（保守加上通配后缀）
-DOMAIN-SUFFIX,images.x.ai,ProxyGroupName
-DOMAIN-SUFFIX,static.x.ai,ProxyGroupName
-DOMAIN-SUFFIX,cdn.x.ai,ProxyGroupName
-DOMAIN-SUFFIX,media.x.ai,ProxyGroupName
+DOMAIN-SUFFIX,images.x.ai
+DOMAIN-SUFFIX,static.x.ai
+DOMAIN-SUFFIX,cdn.x.ai
+DOMAIN-SUFFIX,media.x.ai
 
 # 兼容性：把常见包含 grok 关键字的域名也拦截（可选，较宽泛）
 # 如果你不想过宽，可以注释或删掉下面这行
-DOMAIN-KEYWORD,grok,ProxyGroupName
+DOMAIN-KEYWORD,grok

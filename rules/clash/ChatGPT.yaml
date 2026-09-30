@@ -1,0 +1,7 @@
+# Generated from list/ChatGPT.list; do not edit independently.
+payload:
+  - 'DOMAIN-SUFFIX,chatgpt.com'
+  - 'DOMAIN-SUFFIX,openai.com'
+  - 'DOMAIN-SUFFIX,oaistatic.com'
+  - 'DOMAIN-SUFFIX,oaiusercontent.com'
+  - 'DOMAIN,openaiapi-site.azureedge.net'
