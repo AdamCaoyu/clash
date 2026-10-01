@@ -1,5 +1,0 @@
-# Generated from list/AIOverrides.list; do not edit independently.
-payload:
-  - 'DOMAIN-SUFFIX,trae.ai'
-  - 'DOMAIN-SUFFIX,marscode.com'
-  - 'DOMAIN-SUFFIX,coderabbit.gallery.vsassets.io'

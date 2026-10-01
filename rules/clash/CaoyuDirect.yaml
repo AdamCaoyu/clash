@@ -1,8 +1,0 @@
-# Generated from list/CaoyuDirect.list; do not edit independently.
-payload:
-  - 'DOMAIN-SUFFIX,letsencrypt.org'
-  - 'DOMAIN-SUFFIX,acme-v02.api.letsencrypt.org'
-  - 'DOMAIN-SUFFIX,acme-staging-v02.api.letsencrypt.org'
-  - 'DOMAIN-SUFFIX,dynv6.com'
-  - 'DOMAIN-SUFFIX,adamcao.v6.rocks'
-  - 'DOMAIN-SUFFIX,v6.rocks'

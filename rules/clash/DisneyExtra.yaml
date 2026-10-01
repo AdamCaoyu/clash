@@ -1,6 +1,0 @@
-# Generated from list/DisneyExtra.list; do not edit independently.
-payload:
-  - 'DOMAIN-SUFFIX,abcnews.edgesuite.net'
-  - 'DOMAIN-SUFFIX,disney.demdex.net'
-  - 'DOMAIN-SUFFIX,dlp-media.com'
-  - 'DOMAIN-SUFFIX,dssedge.com'

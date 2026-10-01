@@ -1,5 +1,0 @@
-# Generated from list/AI2.list; do not edit independently.
-payload:
-  - 'DOMAIN-SUFFIX,meta.ai'
-  - 'DOMAIN-SUFFIX,metademolab.com'
-  - 'DOMAIN-SUFFIX,metaaivm.com'
